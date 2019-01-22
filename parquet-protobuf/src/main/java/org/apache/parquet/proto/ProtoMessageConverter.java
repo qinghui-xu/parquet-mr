@@ -65,7 +65,16 @@ class ProtoMessageConverter extends GroupConverter {
   protected final Message.Builder myBuilder;
   protected final Map<String, String> extraMetadata;
 
-  // used in record converter
+  /**
+   * Used in record converter.
+   *
+   * @param conf Configuration for some customizable behavior,
+   *            eg. "parquet.proto.accept.unknown.enum" - whether to accept an unparsable (after trying with proto enum label and number) enum as `UNKNOWN` with a number -1 (the one generated automatically for each proto enum)
+   * @param pvc The parent value containing the converted proto
+   * @param protoClass The class of the converted proto
+   * @param parquetSchema The (part of) parquet schema that should match to the expected proto
+   * @param extraMetadata Metadata from parquet footer, containing useful information about parquet-proto convertion behavior
+   */
   ProtoMessageConverter(Configuration conf, ParentValueContainer pvc, Class<? extends Message> protoClass, GroupType parquetSchema, Map<String, String> extraMetadata) {
     this(conf, pvc, Protobufs.getMessageBuilder(protoClass), parquetSchema, extraMetadata);
   }

@@ -24,6 +24,7 @@ import com.google.protobuf.MessageOrBuilder;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.parquet.schema.MessageType;
 
+import java.util.Collections;
 import java.util.Map;
 
 /**
@@ -56,6 +57,18 @@ public class ProtoRecordConverter<T extends MessageOrBuilder> extends ProtoMessa
   public ProtoRecordConverter(Configuration conf, Message.Builder builder, MessageType parquetSchema, Map<String, String> extraMetadata) {
     super(conf, new SkipParentValueContainer(), builder, parquetSchema, extraMetadata);
     reusedBuilder = getBuilder();
+  }
+
+  // Old version constructors, kept for code backward compatibility.
+  // The instance will not be able to handle unknowned enum values written by parquet-proto (the behavior before PARQUET-1455)
+  @Deprecated
+  public ProtoRecordConverter(Class<? extends Message> protoclass, MessageType parquetSchema) {
+    this(new Configuration(), protoclass, parquetSchema, Collections.emptyMap());
+  }
+
+  @Deprecated
+  public ProtoRecordConverter(Message.Builder builder, MessageType parquetSchema) {
+    this(new Configuration(), builder, parquetSchema, Collections.emptyMap());
   }
 
   @Override
