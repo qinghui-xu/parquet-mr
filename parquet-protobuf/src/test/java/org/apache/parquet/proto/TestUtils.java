@@ -161,8 +161,7 @@ public class TestUtils {
     if (messageClass != null) {
       readerBuilder.set(ProtoReadSupport.PB_CLASS, messageClass.getName()).build();
     }
-    ParquetReader reader = readerBuilder.build();
-    try {
+    try (ParquetReader reader = readerBuilder.build()) {
       List<T> result = new ArrayList<T>();
       boolean hasNext = true;
       while (hasNext) {
@@ -174,8 +173,6 @@ public class TestUtils {
         }
       }
       return result;
-    } finally {
-      reader.close();
     }
   }
 

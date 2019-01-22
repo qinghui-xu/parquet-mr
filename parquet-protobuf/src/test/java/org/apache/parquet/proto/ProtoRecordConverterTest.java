@@ -27,7 +27,10 @@ import java.util.List;
 
 import static org.apache.parquet.proto.TestUtils.testData;
 import static org.apache.parquet.proto.test.TestProtobuf.SchemaConverterAllDatatypes;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 public class ProtoRecordConverterTest {
 
